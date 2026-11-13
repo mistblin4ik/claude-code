@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <h1>{% if q %}Результаты: «{{ q }}»{% else %}Все песни{% endif %}</h1>
+  <p>Найдено песен: {{ songs|length }}</p>
+</section>
+
+{% if songs %}
+<div class="grid">
+  {% for s in songs %}
+  <a class="card" href="/songs/{{ s.id }}">
+    <div class="card__cover" {% if s.cover_url %}style="background-image:url('{{ s.cover_url }}')"{% endif %}>
+      {% if not s.cover_url %}<span>{{ s.title[0]|upper }}</span>{% endif %}
+    </div>
+    <div class="card__body">
+      {% if s.genre %}<span class="tag">{{ s.genre }}</span>{% endif %}
+      <h3>{{ s.title }}</h3>
+      <p class="muted">{{ s.artist }}{% if s.year %} · {{ s.year }}{% endif %}</p>
+      <div class="stars">{{ '★' * s.rating }}<span>{{ '★' * (5 - s.rating) }}</span></div>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty">
+  <p>Ничего не найдено.</p>
+  <a href="/songs/new" class="btn btn--primary">Добавить песню</a>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ song.title }} — Drain Gang{% endblock %}
+{% block content %}
+<a href="/" class="back">← Ко всем песням</a>
+<article class="song">
+  <div class="song__cover" {% if song.cover_url %}style="background-image:url('{{ song.cover_url }}')"{% endif %}>
+    {% if not song.cover_url %}<span>{{ song.title[0]|upper }}</span>{% endif %}
+  </div>
+  <div class="song__info">
+    {% if song.genre %}<span class="tag">{{ song.genre }}</span>{% endif %}
+    <h1>{{ song.title }}</h1>
+    <p class="song__artist">{{ song.artist }}{% if song.year %} · {{ song.year }}{% endif %}</p>
+    <div class="stars stars--lg">{{ '★' * song.rating }}<span>{{ '★' * (5 - song.rating) }}</span></div>
+    <p class="song__desc">{{ song.description or 'Описание пока не добавлено.' }}</p>
+    <div class="actions">
+      <a href="/songs/{{ song.id }}/edit" class="btn btn--primary">Редактировать</a>
+      <form action="/songs/{{ song.id }}/delete" method="post" onsubmit="return confirm('Удалить эту песню?')">
+        <button class="btn btn--danger">Удалить</button>
+      </form>
+    </div>
+  </div>
+</article>
+{% endblock %}

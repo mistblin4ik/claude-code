@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Drain Gang{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container header__inner">
+      <a href="/" class="logo">🌧 <span>Drain Gang</span></a>
+      <form class="search" action="/" method="get">
+        <input type="search" name="q" value="{{ q|default('') }}" placeholder="Поиск по названию, исполнителю, жанру…">
+      </form>
+      <a href="/popular" class="nav-link">Популярное</a>
+      <a href="/songs/new" class="btn-heart" title="Добавить песню" aria-label="Добавить песню">
+        <img src="/static/img/dg-heart.png" alt="DG">
+      </a>
+    </div>
+  </header>
+  <main class="container main">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="footer">
+    <div class="container">Drain Gang · FastAPI + SQLite · <a href="/popular">Популярное</a></div>
+  </footer>
+</body>
+</html>

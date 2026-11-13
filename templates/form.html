@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Редактирование' if song else 'Новая песня' }} — Drain Gang{% endblock %}
+{% block content %}
+<a href="{{ '/songs/' ~ song.id if song else '/' }}" class="back">← Назад</a>
+<form class="form" method="post" action="{{ '/songs/' ~ song.id ~ '/edit' if song else '/songs/new' }}">
+  <h1>{{ 'Редактирование песни' if song else 'Новая песня' }}</h1>
+
+  <label>Название
+    <input name="title" required value="{{ song.title if song else '' }}">
+  </label>
+  <label>Исполнитель
+    <input name="artist" required value="{{ song.artist if song else '' }}">
+  </label>
+  <div class="row">
+    <label>Год
+      <input name="year" type="number" min="0" max="2100" value="{{ song.year if song and song.year else '' }}">
+    </label>
+    <label>Жанр
+      <input name="genre" value="{{ song.genre if song and song.genre else '' }}">
+    </label>
+    <label>Оценка
+      <select name="rating">
+        {% for i in range(0, 6) %}
+        <option value="{{ i }}" {% if song and song.rating == i %}selected{% endif %}>{{ i }} ★</option>
+        {% endfor %}
+      </select>
+    </label>
+  </div>
+  <label>Ссылка на обложку
+    <input name="cover_url" type="url" placeholder="https://…" value="{{ song.cover_url if song and song.cover_url else '' }}">
+  </label>
+  <label>Описание
+    <textarea name="description" rows="6">{{ song.description if song and song.description else '' }}</textarea>
+  </label>
+
+  <div class="actions">
+    <button class="btn btn--primary">Сохранить</button>
+    <a href="{{ '/songs/' ~ song.id if song else '/' }}" class="btn btn--ghost">Отмена</a>
+  </div>
+</form>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Популярное · Drain Gang{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Популярное</h1>
+  <p>Самые популярные треки исполнителей и число прослушиваний на Spotify</p>
+</section>
+
+<div class="grid">
+  {% for t in tracks %}
+  <div class="card">
+    <div class="card__cover" {% if t.cover_url %}style="background-image:url('{{ t.cover_url }}')"{% endif %}>
+      {% if not t.cover_url %}<span>{{ t.title[0]|upper }}</span>{% endif %}
+    </div>
+    <div class="card__body">
+      <span class="tag">#{{ loop.index }}</span>
+      <h3>{{ t.title }}</h3>
+      <p class="muted">{{ t.artist }}</p>
+      <p class="streams">▶ {{ t.streams|spaced }} прослушиваний</p>
+      {% if t.as_of %}<p class="muted">Spotify, данные на {{ t.as_of }}</p>{% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
